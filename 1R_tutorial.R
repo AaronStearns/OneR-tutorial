@@ -5,12 +5,14 @@ library(OneR)
 # Visualizations:
 library(ggplot2)
 
-# Import data, remove 1st column with duplicate rownames
+# Import the data
 mushrooms <- read.csv("mushroom_data.csv")
 
 # Check the structure of the data frame and observe the variables
 str(mushrooms)
 
+# As can be seen in the above command, the veil_type column only contains
+# one value. This has no predictive power and can thereforecan be deleted.
 mushrooms <- mushrooms %>% select(-veil_type)
 
 # Transform and visualize class balance:
@@ -35,7 +37,7 @@ test <- mushrooms[-train_index,]
 test_labels <- test %>% select(poisonous)
 test <- test %>% select(-poisonous)
 
-# Using OneR algorithm, predict the dependent variable 'poisonous' from 
+# Using the OneR algorithm, predict the dependent variable 'poisonous' from 
 # all independent variables in the 'train' dataset and display model 
 # rules using verbose = T
 model <- OneR(poisonous ~., data = train, verbose = T)
@@ -49,10 +51,8 @@ prediction <- predict(model, test)
 # View confusion matrix to evaluate model accuracy and error types
 eval_model(prediction, test_labels)
 
-# TODO: Use other classification algorithms from the 'caret' package
-# to improve model accuracy / decrease number of Type II errors
-
-
+# Further learning: Use other classification algorithms from the 'caret' 
+# package to improve model accuracy / decrease number of Type II errors
 
 #####################################################
 # OPTIONAL ##########################################
